@@ -1,6 +1,6 @@
 ---
 name: course-page-generator
-description: 將講稿或非結構化筆記轉換為約定的 Markdown 格式，再透過 build script 產生單一 HTML 課程頁面。Skill 的主要任務是 Markdown 格式轉換，build 只是最後一步。
+description: 將講稿或非結構化筆記轉換為約定的 Markdown 格式，再透過 build script 產生單一 HTML 課程頁面與 OG 縮圖。Skill 的主要任務是 Markdown 格式轉換，build 與 OG 圖片生成是最後的必要步驟。
 ---
 
 # Course Page Generator
@@ -70,7 +70,7 @@ description: 將講稿或非結構化筆記轉換為約定的 Markdown 格式，
 
 6. **告知使用者**：列出已建立的檔案清單，並說明下一步（補充內容或直接 build）。
 
-7. **完成後繼續 Step 2 以下流程**（確認 config → build → OG 縮圖）。
+7. **完成後繼續 Step 2 以下流程**（確認 config → build → **OG 縮圖**）。Build 成功後**必須**立即執行 `generate-og.mjs`。
 
 ---
 
@@ -272,36 +272,37 @@ nav:
 
 YAML 完整範例：[config-example.yaml](reference/config-example.yaml)
 
-### Step 3：執行 Build（產出課程頁）
+### Step 3 + 4：執行 Build 並產生 OG 縮圖（必須連續執行）
+
+> ⚠️ **Step 3 與 Step 4 是綁定的：只要執行了 build，就必須接著產生 OG 縮圖。不可只做 build 而跳過 OG。**
 
 所有指令都從 **repo 根目錄** 執行：
 
 ```bash
+# Step 3: Build 課程頁
 node .agents/skills/course-page-generator/scripts/build.mjs <course-dir>
+
+# Step 4: 產生 OG 縮圖（build 成功後立即執行）
+node .agents/skills/course-page-generator/scripts/generate-og.mjs <course-dir>
 ```
 
 範例：
 
 ```bash
 node .agents/skills/course-page-generator/scripts/build.mjs course/cake
+node .agents/skills/course-page-generator/scripts/generate-og.mjs course/cake
 ```
 
-自動流程：
+**Step 3 — Build 自動流程：**
 1. 讀取 `config/global.yaml`（base config）
 2. 讀取 `<course-dir>/config.yaml`（deep merge 覆蓋）
 3. 解析 `<course-dir>/content.md`
 4. 套用 HTML 模板 → 填入 TOC / Scroll Spy
 5. 輸出 `<course-dir>/index.html`
 
-### Step 4：為課程頁產生 OG 縮圖
+**Step 4 — OG 縮圖（build 完成後自動接續）：**
 
-Build 完之後，**一律**針對同一個課程目錄產生 1200×630（1.91:1）的 OG 縮圖：
-
-```bash
-node .agents/skills/course-page-generator/scripts/generate-og.mjs <course-dir>
-```
-
-> ⚠️ 此步驟為必要步驟，每次 build 完成後都要執行。需要 Puppeteer（`npm install --save-dev puppeteer`）。
+> ⚠️ 此步驟為**必要步驟**，每次 build 完成後都**必須**執行，不可省略。需要 Puppeteer（`npm install --save-dev puppeteer`）。
 
 `generate-og.mjs` 的行為概要：
 
