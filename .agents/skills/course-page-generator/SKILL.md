@@ -57,7 +57,7 @@ description: 將講稿或非結構化筆記轉換為約定的 Markdown 格式，
    └── assets/          # 空資料夾（保留圖片用）
    ```
 
-3. **生成 `config.yaml`**：根據主題填入基本欄位（`page.title`、`page.hero_title`、`seo.title`、`seo.description`、`quotes.opening`、`quotes.closing`）；`seo.image` 與 `seo.url` 留空或填入佔位符提醒使用者補充。
+3. **生成 `config.yaml`**：根據主題填入基本欄位（`page.title`、`page.hero_title`、`seo.title`、`seo.description`、`quotes.opening`、`quotes.closing`）；`seo.image` 與 `seo.url` 依照 Step 2-0 偵測到的 GitHub Pages 前綴填入；若偵測失敗則留空。
 
 4. **生成 `content.md` 骨架**：
    - 推導 3–5 個主要章節（`#`），每章節下 1–2 個子章節（`##`）與 2–3 張卡片（`### Emoji Title`）
@@ -194,6 +194,24 @@ Markdown 範例請參考：[content-example.md](reference/content-example.md)
 
 ### Step 2：確認或建立課程 Config
 
+#### 2-0：偵測 GitHub Pages 前綴（必須先執行）
+
+在撰寫任何 config 之前，先執行以下指令取得 GitHub Pages base URL：
+
+```bash
+git remote get-url origin
+```
+
+解析規則：
+- SSH 格式 `git@github.com:user/repo.git` → `https://user.github.io/repo`
+- HTTPS 格式 `https://github.com/user/repo.git` → `https://user.github.io/repo`
+
+取得 `GH_BASE` 後，`seo.image` 和 `seo.url` 的值即為：
+- `seo.url`：`{GH_BASE}/{course-dir}/`
+- `seo.image`：`{GH_BASE}/{course-dir}/assets/og-image.jpg`（固定檔名，由 generate-og.mjs 輸出）
+
+若指令失敗（非 git repo、無 remote、非 GitHub），直接在 config 中留空這兩個欄位，並告知使用者需手動填入。
+
 Config 分為兩層：
 
 | 檔案 | 用途 | 必要性 |
@@ -248,8 +266,8 @@ page:
 seo:
   title: "SEO 標題"
   description: "頁面描述"
-  image: "https://yourdomain.com/<course-dir>/assets/og-image.jpg"
-  url: "https://yourdomain.com/<course-dir>/"
+  image: "https://username.github.io/repo/<course-dir>/assets/og-image.jpg"  # 由 Step 2-0 偵測填入
+  url: "https://username.github.io/repo/<course-dir>/"                        # 由 Step 2-0 偵測填入
 
 quotes:
   opening:
@@ -259,7 +277,7 @@ quotes:
       結尾引言
 ```
 
-⚠️ **`seo.image` 必須使用絕對 URL**（`https://...`），社群平台無法解析相對路徑，會導致 OG 預覽圖片無法顯示。
+⚠️ **`seo.image` 必須使用絕對 URL**（`https://...`），社群平台無法解析相對路徑，會導致 OG 預覽圖片無法顯示。這兩個欄位的值應在 Step 2-0 執行 `git remote get-url origin` 後填入。
 
 `nav`（Hero 導覽按鈕）預設從 `content.md` 的 `#` 章節自動產生，不需手動維護。
 若需自訂按鈕文字，可在 config.yaml 中覆蓋：
