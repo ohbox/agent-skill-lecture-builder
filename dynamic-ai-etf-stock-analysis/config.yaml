@@ -1,0 +1,19 @@
+page:
+  title: "動態 AI 與 ETF 股市分析"
+  badge: "AI × ETF × MARKET"
+  hero_title: "動態 AI 與 ETF<br>股市分析"
+  subtitle: "用實際案例建立一套可重複的市場判讀流程：從題材、資金、ETF 結構到風險控管。"
+
+seo:
+  title: "動態 AI 與 ETF 股市分析｜案例式講義"
+  description: "以 AI 題材與 ETF 為主軸，示範如何用動態資料、ETF 結構與風險規則做股市分析。"
+  image: "https://ohbox.github.io/agent-skill-lecture-builder/dynamic-ai-etf-stock-analysis/assets/og-image.jpg"
+  url: "https://ohbox.github.io/agent-skill-lecture-builder/dynamic-ai-etf-stock-analysis/"
+
+quotes:
+  opening:
+    text: "AI 可以加快整理資料，但真正的分析能力，是把題材、資金、估值與風險放進同一張地圖。"
+  closing:
+    text: >
+      好的股市分析不是猜明天漲跌，<br>
+      而是建立一套能反覆檢查、能被市場驗證、也能在錯誤時及早收手的流程。

@@ -1,0 +1,19 @@
+page:
+  title: "用 Agent Skill 打造可重複使用的講義網站"
+  badge: "CODEX × AGENT SKILL × COURSE PAGE"
+  hero_title: "用 Agent Skill<br>打造講義網站工作流"
+  subtitle: "從一次性的 Vibe Coding 作品，整理成可維護、可重複使用、可持續擴充的課程網頁生成流程。"
+
+seo:
+  title: "用 Agent Skill 打造可重複使用的講義網站｜工程師下班有約"
+  description: "以 Codex、Markdown 模板與 Agent Skill 為主軸，示範如何把講義網站從一次性生成，整理成可長期維護的工作流。"
+  image: "https://ohbox.github.io/agent-skill-lecture-builder/example/assets/og-image.jpg"
+  url: "https://ohbox.github.io/agent-skill-lecture-builder/example/"
+
+quotes:
+  opening:
+    text: "AI 可以很快生成第一版，但真正能累積價值的是：把一次性的成果整理成可重複使用的工作流。"
+  closing:
+    text: >
+      不要只問 AI 能不能幫你做出一個漂亮成果，<br>
+      更要問：這個成果能不能被修改、被維護、被下一次任務重複使用。
